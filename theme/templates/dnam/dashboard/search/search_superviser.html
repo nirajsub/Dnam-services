@@ -1,0 +1,85 @@
+{% extends 'dashboard/base.html' %}
+{% block title %}
+Dnam | Supervisers
+{% endblock title %}
+{% block superviser-active %}
+<span
+                class="absolute inset-y-0 left-0 w-1 bg-[#f8373f] rounded-tr-lg rounded-br-lg"
+                aria-hidden="true"
+              ></span>
+{% endblock superviser-active %}
+{% block search-content %}
+<div class="flex justify-start flex-1 lg:mr-32">
+  <div class="relative w-full  max-w-xl mr-6 focus-within:text-purple-500">
+    <div class="absolute inset-y-0 flex items-center pl-2">
+      <svg class="w-4 h-4" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20">
+        <path fill-rule="evenodd"
+          d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z"
+          clip-rule="evenodd"></path>
+      </svg>
+    </div>
+    <form
+    class="flex flex-row"
+      action="{% url 'search_superviser' %}"
+      method="GET"
+    >
+    <input
+      class="w-full pl-8 p-2 text-sm text-gray-700 placeholder-gray-600 bg-gray-100 border-0 rounded-md   focus:placeholder-gray-500 focus:bg-white focus:border-purple-300 focus:outline-none focus:shadow-outline-purple form-input"
+      type="text" name="keyword" placeholder="Search" aria-label="Search" />
+      <button class="btn btn-danger my-2 my-sm-0" type="submit">
+        Search
+      </button>
+  </form>
+  </div>
+</div>
+
+{% endblock search-content %}
+
+
+{% block content %}
+<main class="h-full overflow-y-auto">
+    <div class="container px-6 mx-auto grid">
+        <div>
+            <a class=" mr-4 flex justify-center">
+                <h4
+                    class="mb-4 text-lg font-semibold text-gray-50 border-[#f8373f] border-2 bg-[#f8373f] p-2 rounded cursor-pointer hover:bg-gray-50 hover:text-[#f8373f] hover:border-[#f8373f] mr-4">
+                    Search Results for <span class="text-info">"{{request.GET.keyword}}"</span>
+                </h4>
+            </a>
+        </div>
+      <!-- Cards -->
+      <div class="grid gap-6 mb-8 md:grid-cols-2 xl:grid-cols-4 mt-6">
+        
+      
+        <!-- Card -->
+        
+        {% for usr in results %}
+        {% if usr.is_superuser %}
+        {% else %}
+        <a href="{% url 'supervisertask' usr.id %}">
+        <div
+          class="flex items-center p-4 bg-white rounded-lg shadow-lg  cursor-pointer hover:shadow-md"
+        >
+          <div
+            class="p-3 mr-4 text-orange-500 bg-orange-100 rounded-full  "
+          >
+            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+              <path
+                d="M13 6a3 3 0 11-6 0 3 3 0 016 0zM18 8a2 2 0 11-4 0 2 2 0 014 0zM14 15a4 4 0 00-8 0v3h8v-3zM6 8a2 2 0 11-4 0 2 2 0 014 0zM16 18v-3a5.972 5.972 0 00-.75-2.906A3.005 3.005 0 0119 15v3h-3zM4.75 12.094A5.973 5.973 0 004 15v3H1v-3a3 3 0 013.75-2.906z"
+              ></path>
+            </svg>
+          </div>
+          <div>
+            <p
+              class="mb-2 text-sm font-medium text-gray-600 "
+            >
+             {{usr.superviser_name}}
+            </p>
+          </div>
+        </div>
+      </a>
+      {% endif %}
+      {% endfor %}
+    </div>
+  </main>
+{% endblock content %}

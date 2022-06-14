@@ -1,0 +1,57 @@
+
+{% extends 'base.html' %}
+{% block title %}Dnam | All Employees{% endblock title %}
+{% block employee-active %}
+<span
+                class="absolute inset-y-0 left-0 w-1 bg-[#f8373f] rounded-tr-lg rounded-br-lg"
+                aria-hidden="true"
+              ></span>
+{% endblock employee-active %}
+
+{% block content %}
+
+<main class="h-full overflow-y-auto">
+    <div>
+        <a class=" mr-4 flex justify-center">
+            <h4
+                class="mb-4 text-lg font-semibold text-gray-50 border-[#f8373f] border-2 bg-[#f8373f] p-2 rounded cursor-pointer hover:bg-gray-50 hover:text-[#f8373f] hover:border-[#f8373f] mr-4">
+                Search Results for <span class="text-info">"{{request.GET.keyword}}"</span>
+            </h4>
+        </a>
+    </div>
+    <div class="container px-6 mx-auto grid">
+
+
+      <!-- Cards -->
+      
+      <div class="grid gap-6 mb-8 md:grid-cols-2 xl:grid-cols-4 mt-6">
+        <!-- Card -->
+        
+        
+        {% for emp in results %}
+      <a href="{% url 'employeetasks' emp.id %}">
+          <div
+            class="flex items-center p-4 bg-white rounded-lg shadow-xs  cursor-pointer hover:shadow-md"
+          >
+            <div
+              class="p-3 mr-4 text-orange-500 bg-orange-100 rounded-full "
+            >
+              <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                <path
+                  d="M13 6a3 3 0 11-6 0 3 3 0 016 0zM18 8a2 2 0 11-4 0 2 2 0 014 0zM14 15a4 4 0 00-8 0v3h8v-3zM6 8a2 2 0 11-4 0 2 2 0 014 0zM16 18v-3a5.972 5.972 0 00-.75-2.906A3.005 3.005 0 0119 15v3h-3zM4.75 12.094A5.973 5.973 0 004 15v3H1v-3a3 3 0 013.75-2.906z"
+                ></path>
+              </svg>
+            </div>
+            <div>
+              <p
+                class="mb-2 text-sm font-medium text-gray-600 "
+              >
+                {{emp.employee_name}}
+              </p>
+            </div>
+          </div>
+        </a>
+{% endfor %}
+    </div>
+  </main>
+{% endblock content %}

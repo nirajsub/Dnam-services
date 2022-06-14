@@ -1,0 +1,174 @@
+
+{% extends 'base.html' %}
+{% block invoice-active %}
+<span
+                class="absolute inset-y-0 left-0 w-1 bg-[#f8373f] rounded-tr-lg rounded-br-lg"
+                aria-hidden="true"
+              ></span>
+{% endblock invoice-active %}
+{% block search-content %}
+<div class="flex justify-start flex-1 lg:mr-32">
+  <div class="relative w-full  max-w-xl mr-6 focus-within:text-purple-500">
+    <div class="absolute inset-y-0 flex items-center pl-2">
+      <svg class="w-4 h-4" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20">
+        <path fill-rule="evenodd"
+          d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z"
+          clip-rule="evenodd"></path>
+      </svg>
+    </div>
+    <form
+    class="flex flex-row"
+      action="{% url 'search_invoice_in' %}"
+      method="GET"
+    >
+    <input
+      class="w-full pl-8 p-2 text-sm text-gray-700 placeholder-gray-600 bg-gray-100 border-0 rounded-md   focus:placeholder-gray-500 focus:bg-white focus:border-purple-300 focus:outline-none focus:shadow-outline-purple form-input"
+      type="text" name="keyword" placeholder="Search" aria-label="Search" />
+      <button class="btn btn-danger my-2 my-sm-0" type="submit">
+        Search
+      </button>
+  </form>
+  </div>
+</div>
+
+{% endblock search-content %}
+{% block content %}
+<main class="h-full overflow-y-auto ">
+<div class="w-full overflow-hidden rounded-lg shadow-xs mt-20">
+         <div>
+  <a href="{% url 'addinvoiceout' %}" class=" mr-4 flex justify-end">
+    <h4
+        class="mb-4 text-lg font-semibold text-gray-50 border-[#f8373f] border-2 bg-[#f8373f] p-2 rounded cursor-pointer hover:bg-gray-50 hover:text-[#f8373f] hover:border-[#f8373f] mr-4">
+        Add InvoiceOut
+    </h4>
+</a>
+</div>
+ 
+  <div class="w-full overflow-x-auto">
+    <table class="w-full whitespace-no-wrap">
+      <thead>
+        <tr
+          class="text-xs font-semibold tracking-wide text-left text-gray-900 uppercase border-b bg-gray-200 "
+        >
+          <th class="px-4 py-3">Invoice Title</th>
+          <th class="px-4 py-3">File Type</th>
+          <th class="px-4 py-3">Actions</th>
+        </tr>
+      </thead>
+      <tbody
+        class="bg-gray-100 divide-y"
+      >
+      {% for invoice in page_obj %}
+      {% if invoice.delete == False %}
+        <tr class="text-gray-800">
+          <td class="px-4 py-3">
+            <div class="flex items-center text-sm">
+              <div>
+                <a href="{{invoice.out_image.url}}"><p class="font-semibold">{{invoice.name}}</p></a>
+              </div>
+            </div>
+          </td>
+          <td class="px-4 py-3 text-sm">
+              <span
+              class="px-4 py-1 font-semibold leading-tight text-green-700 bg-green-100 rounded-full"
+            >
+            {{invoice.invoice_type}}
+            </span>
+          </td>
+          <td class="px-4 py-3">
+            <div class="flex items-center space-x-4 text-sm">
+              <a href="{% url 'editinvoiceout' invoice.id %}"><button
+                class="flex items-center justify-between px-2 py-2 text-sm font-medium leading-5 text-red-600 rounded-lg focus:outline-none focus:shadow-outline-yellow"
+                aria-label="Edit"
+              >
+                <svg
+                  class="w-5 h-5"
+                  aria-hidden="true"
+                  fill="currentColor"
+                  viewBox="0 0 20 20"
+                >
+                  <path
+                    d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z"
+                  ></path>
+                </svg>
+              </button></a>
+            </div>
+          </td>
+        </tr>
+        {% endif %}
+        {% endfor %}
+      </tbody>
+    </table>
+    <div
+    class="grid px-4 py-3 text-xs font-semibold tracking-wide text-gray-500 uppercase border-t  bg-gray-50 sm:grid-cols-9 ">
+    <span class="current flex items-center col-span-3">
+        Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+    </span>
+    <span class="col-span-2"></span>
+    <!-- Pagination -->
+    <span class="flex col-span-4 mt-2 sm:mt-auto sm:justify-end">
+        <nav aria-label="Table navigation">
+            <ul class="inline-flex items-center">
+                <li>
+                    <button
+                        class="px-3 py-1 rounded-md rounded-l-lg focus:outline-none focus:shadow-outline-purple"
+                        aria-label="Previous">
+                        <svg aria-hidden="true" class="w-4 h-4 fill-current" viewBox="0 0 20 20">
+                            <path
+                                d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z"
+                                clip-rule="evenodd" fill-rule="evenodd"></path>
+                        </svg>
+                    </button>
+                </li>
+{% if page_obj.has_previous %}
+                
+<li>
+<button class="px-3 py-1 rounded-md focus:outline-none focus:shadow-outline-purple">
+<a href="?page=1">&laquo; First</a>
+</button>
+</li>
+<li>
+<button class="px-3 py-1 rounded-md focus:outline-none focus:shadow-outline-purple">
+<a href="?page={{ page_obj.previous_page_number }}">{{ page_obj.previous_page_number }}</a>
+</button>
+</li>
+
+{% endif %}
+<button
+class="px-3 py-1 text-white transition-colors duration-150 bg-[#f8373f] border border-r-0 border-[#f8373f] rounded-md focus:outline-none focus:shadow-outline-purple">
+{{ page_obj.number }}
+</button>
+
+{% if page_obj.has_next %}
+<li>
+<button class="px-3 py-1 rounded-md focus:outline-none focus:shadow-outline-purple">
+<a href="?page={{ page_obj.next_page_number }}">{{ page_obj.next_page_number }}</a>
+</button>
+</li>
+<li>
+<button class="px-3 py-1 rounded-md focus:outline-none focus:shadow-outline-purple">
+<a href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
+</button>
+</li>
+
+{% endif %}
+<li>
+  <button
+      class="px-3 py-1 rounded-md rounded-r-lg focus:outline-none focus:shadow-outline-purple"
+      aria-label="Next">
+      <svg class="w-4 h-4 fill-current" aria-hidden="true" viewBox="0 0 20 20">
+          <path
+              d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
+              clip-rule="evenodd" fill-rule="evenodd"></path>
+      </svg>
+  </button>
+</li>
+</ul>
+</nav>
+</span>
+</div>
+  </div>
+</div>
+</main>
+
+{% endblock content %}

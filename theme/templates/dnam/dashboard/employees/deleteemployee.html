@@ -1,0 +1,6 @@
+<form method="POST" action="">
+    {% csrf_token %}
+    <p>Are you sure want to delete {{employeedelete.employee_name}}</p>
+    <input type="submit" value="yes">
+    <button><a href="{% url 'allemployee' %}">no</a></button>
+</form>

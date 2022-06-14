@@ -1,0 +1,6 @@
+<form method="POST" action="">
+    {% csrf_token %}
+    <p>Are you sure want to delete {{sitedelete.site_name}}</p>
+    <input type="submit" value="yes">
+    <button><a href="{% url 'allclients' %}">no</a></button>
+</form>
