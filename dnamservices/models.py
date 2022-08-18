@@ -17,6 +17,7 @@ class Superviser(models.Model):
     superviser_user = models.OneToOneField(User, null=True, blank=True, on_delete=models.CASCADE)
     superviser_name = models.CharField(max_length=50)
     superviser_address = models.CharField(max_length=50)
+    superviser_contact = models.CharField(max_length=50)
     delete = models.BooleanField(default=False)
 
     def __str__(self):
@@ -32,14 +33,6 @@ class Employee(models.Model):
     def __str__(self):
         return str(self.employee_name)
 
-class Services(models.Model):
-    name = models.CharField(max_length=50)
-    image = models.ImageField(upload_to='media/services')
-    detail = models.TextField()
-    fade = models.CharField(max_length=50)
-
-    def __str__(self):
-        return self.name
     
 clean_task_enable = [
 
@@ -129,21 +122,49 @@ class InvoiceOut(models.Model):
     def __str__(self):
         return self.name
 
-class Contacts(models.Model):
-    name = models.CharField(max_length=50)
-    email = models.EmailField(max_length=254)
-    phone = PhoneNumberField()
-    message = models.TextField()
+class Contact(models.Model):
+    name = models.CharField(max_length=120)
+    email = models.EmailField(max_length=100)
+    phone = models.CharField(max_length=20)
+    content = models.TextField()
+    timestamp = models.DateTimeField(auto_now_add=True, blank=True)
 
     def __str__(self):
-        return self.name
+        return 'messege from ' + self.name
     
-class Testimonials(models.Model):
+    class Meta:
+        ordering = ['id',]  
+
+    
+class Services(models.Model):
     name = models.CharField(max_length=50)
-    clent_name = models.CharField(max_length=50)
-    company_name = models.CharField(max_length=50)
-    image = models.ImageField(upload_to="Testimonials")
-    description = models.TextField()
+    image = models.ImageField(upload_to='media/services')
+    detail = models.TextField()
+    fade = models.CharField(max_length=50)
 
     def __str__(self):
         return self.name
+
+class Career(models.Model):
+    name = models.CharField(max_length=50)
+    image = models.ImageField(upload_to='media/career')
+    detail = models.TextField()
+    role = models.CharField(max_length=50)
+
+    def __str__(self):
+        return self.name
+
+class Ourteam(models.Model):
+    name = models.CharField(max_length=50)
+    image = models.ImageField(upload_to='media/team')
+    role = models.CharField(max_length=50)
+
+    def __str__(self):
+        return self.name
+
+class AboutUs(models.Model):
+    image = models.ImageField(upload_to='media/career')
+    detail = models.TextField()
+
+    def __str__(self):
+        return self.detail

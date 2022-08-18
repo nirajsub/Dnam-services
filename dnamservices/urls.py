@@ -7,11 +7,12 @@ from .import views
 
 urlpatterns = [
     # landing pages url
-    path('', HomeView, name = "home"),
-    path('aboutus', AboutUsView, name = "aboutus"),
+    path('', HomeView, name="home"),
+    path('servicedetail/<str:pk>', ServiceDetailView, name="servicedetail"),
+    path('aboutus', AboutUsView, name="aboutus"),
     path('services', ServicesView, name="services"),
-    path('service-detail/<str:pk>', ServiceDetailView, name="servicedetail"),
-    path("superviser-login/", SuperviserLoginView.as_view(), name="superviser_login"),
+    path('career', CareerView, name="career"),
+    path("supervisor-login/", SuperviserLoginView.as_view(), name="superviser_login"),
 
     # dashboard url
     path('dashboard/', DashboardView, name="dashboard"),
@@ -25,8 +26,8 @@ urlpatterns = [
     path('editsite/<str:pk>', EditSitesView, name="editsite"),
     path('addworkingdays/<str:pk>', AddWorkingDaysView, name= "addworkingdays"),
     path('sitetasks/<str:pk>', SitesTaskView, name= 'sitetasks'),
-    path('deletesite/<str:pk>', DeleteSiteView, name="deletesite"),
-
+    path('deleteclient/<str:pk>/', DeleteClientView, name="deleteclient"),
+    path('deleteclientsite/<str:pk>', DeleteClientSite, name="deleteclientsites"),
 
     # invoice url
     path('invoicein', InvoiceInView, name="invoicein"),
@@ -35,6 +36,8 @@ urlpatterns = [
     path('addinvoiceout', AddInvoiceOutView, name="addinvoiceout"),
     path('edit-invoice-in/<str:pk>', EditInvoiceInView, name="editinvoicein"),
     path('edit-invoice-out/<str:pk>', EditInvoiceOutView, name="editinvoiceout"),
+    path('delete-invoice-in/<str:pk>', DeleteInvoiceIn, name="deleteinvoicein"),
+    path('delete-invoice-out/<str:pk>', DeleteInvoiceOut, name="deleteinvoiceout"),
 
     # employee url
     path('allemployee', AllEmployees, name="allemployee"),
@@ -58,13 +61,15 @@ urlpatterns = [
     path('complaintsupdate/<str:pk>', ComplaintsUpdateView, name='complaintsupdate'),
     path("add-work-order/", AddWorkOrderView.as_view(), name="add_work_order"),
     path("add-complaints/", AddComplaitsView.as_view(), name="add_complaints"),
-
+    path("deletetask/<str:pk>/", TaskDeleteView, name="deletetask"),
+    path("deletecomplaint/<str:pk>/", ComplaintDeleteView, name="deletecomplaint"),
 
     # search page url
     path("search-site/", SiteSearchView.as_view(), name="search_site"),
     path("search-client/", ClientSearchView.as_view(), name="search_client"),
     path("search-client-site/<str:pk>/", ClientSiteSearchView, name="search_client_site"),
     path("search-invoice-in/", InvoiceInSearchView.as_view(), name="search_invoice_in"),
+    path("search-invoice-out/", InvoiceOutSearchView.as_view(), name="search_invoice_out"),
     path("search-employee/", EmployeeSearchView.as_view(), name="search_employee"),
     path("search-alltask/", AllTaskSearchView.as_view(), name="search_alltask"),
 

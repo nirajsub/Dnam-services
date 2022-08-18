@@ -4,6 +4,8 @@
 {% block title %}
 Dnam | Update Complaints
 {% endblock title %}
+{% load crispy_forms_tags %}
+{% load tailwind_filters %}
 {% block alltask-active %}
 <span
 class="absolute inset-y-0 left-0 w-1 bg-[#f8373f] rounded-tr-lg rounded-br-lg"
@@ -21,13 +23,9 @@ class="absolute inset-y-0 left-0 w-1 bg-[#f8373f] rounded-tr-lg rounded-br-lg"
               
     
               <div class="md:w-1/2 px-3">
-                <label class="uppercase tracking-wide text-gray-600  text-xs font-bold mb-2" for="title">
-                  Site 
-                </label>
-                {{form.site}}
-               
-                {% comment %} <input class="w-full  text-gray-600 bg-gray-50 border border-gray-50 rounded py-3 px-4 mb-3" id="title" type="text" name="site" value="{{workordertask.site}}"> {% endcomment %}
-              </div>
+
+                {{form.site|as_crispy_field}}
+                </div>
     
             </div>
     
@@ -39,7 +37,7 @@ class="absolute inset-y-0 left-0 w-1 bg-[#f8373f] rounded-tr-lg rounded-br-lg"
                       Work Order
                     </label>
                    
-                    <input class="w-full  text-gray-600 bg-gray-50 border border-gray-50 rounded py-3 px-4 mb-3 outline-none" id="company" type="text" name="workorder" value="{{complaintstask.workorder}}"> 
+                    <input class="w-full  text-gray-600 bg-gray-100 border border-gray-50 rounded py-3 px-4 mb-3 outline-none" id="company" type="text" name="workorder" value="{{complaintstask.workorder}}"> 
                   </div>
     
                   
@@ -53,13 +51,13 @@ class="absolute inset-y-0 left-0 w-1 bg-[#f8373f] rounded-tr-lg rounded-br-lg"
                     <label class="uppercase tracking-wide text-gray-600 text-xs font-bold mb-2" for="company">
                       Pricing
                     </label>
-                    <input class="w-full  text-gray-600 bg-gray-50 border border-gray-50 rounded py-3 px-4 mb-3" id="company" type="text" name="pricing" value="{{complaintstask.pricing}}"> 
+                    <input class="w-full  text-gray-600 bg-gray-100 border border-gray-50 rounded py-3 px-4 mb-3" id="company" type="text" name="pricing" value="{{complaintstask.pricing}}"> 
                   </div>
                   <div class="md:w-1/2 px-3">
                     <label class="uppercase tracking-wide text-gray-600  text-xs font-bold mb-2" for="title">
                       Comments
                     </label>
-                    <input class="w-full  text-gray-600 bg-gray-50 border border-gray-50 rounded py-3 px-4 mb-3" id="title" type="text" name="comments" value="{{complaintstask.comments}}">
+                    <input class="w-full  text-gray-600 bg-gray-100 border border-gray-50 rounded py-3 px-4 mb-3" id="title" type="text" name="comments" value="{{complaintstask.comments}}">
                   </div>
 
             </div>
@@ -71,36 +69,38 @@ class="absolute inset-y-0 left-0 w-1 bg-[#f8373f] rounded-tr-lg rounded-br-lg"
                       Assigned To
                     </label>
                     {{form.assigned_to}}
-                    {% comment %} <input class="w-full  text-gray-600 bg-gray-50 border border-gray-50 rounded py-3 px-4 mb-3" id="title" type="text"  name="assigned_to" value="{% for employee in complaintstask.assigned_to.all %}{{employee.employee_name}}{% endfor %} "> {% endcomment %}
                   </div>
                   <div class="md:w-1/2 px-3 mb-6 md:mb-0">
                     <label class="uppercase tracking-wide text-gray-600  text-xs font-bold mb-2" for="company">
                       Completed By
                     </label>
-                    <input class="w-full  text-gray-600 bg-gray-50 border border-gray-50 rounded py-3 px-4 mb-3" id="company" type="text" name="completed_by" value="{{complaintstask.completed_by}}"> 
+                    <input class="w-full  text-gray-600 bg-gray-100 border border-gray-50 rounded py-3 px-4 mb-3" id="company" type="text" name="completed_by" value="{{complaintstask.completed_by}}"> 
                   </div>
             </div>
             <div class="-mx-3 md:flex mb-6">
                   <div class="md:w-1/2 px-3">
                     <label class="uppercase tracking-wide text-gray-600  text-xs font-bold mb-2" for="title">
                       Complition Date 
+                    </label><br>
+                    <label class="uppercase tracking-wide text-gray-600  text-xs font-bold mb-2" for="title">
+                      Currently:
+                      {{complaintstask.completion_date}}
                     </label>
-                    {{form.completion_date}}
-                    {% comment %} <input class="w-full  text-gray-600 bg-gray-50 border border-gray-50 rounded py-3 px-4 mb-3" id="title" type="date" name="completion_date" value="{{complaintstask.completion_date}}"> {% endcomment %}
+                    <input class="w-full  text-gray-600 bg-gray-100 border border-gray-50 rounded py-3 px-4 mb-3" id="title" type="date" name="completion_date" value="{{complaintstask.completion_date}}", required=True>
                   </div>
                   <div class="md:w-1/2 px-3 mb-6 md:mb-0">
                     <label class="uppercase tracking-wide text-gray-600  text-xs font-bold mb-2" for="company">
                       Extra detail
                     </label>
-                    <input class="w-full  text-gray-600 bg-gray-50 border border-gray-50 rounded py-3 px-4 mb-3" id="company" type="text" name="extra_detail" value="{{complaintstask.extra_detail}}"> 
+                    <input class="w-full  text-gray-600 bg-gray-100 border border-gray-50 rounded py-3 px-4 mb-3" id="company" type="text" name="extra_detail" value="{{complaintstask.extra_detail}}"> 
                   </div>
             </div>
+           
             <div class="px-6 my-6 flex justify-center">
               <input type="submit"
-          class="flex items-center justify-center md:w-1/2  px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple"
-          value="Update">
-        </div>
-    
+              class="flex items-center justify-center md:w-1/2  px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple"
+              value="Update">
+            </div>
           </div>
         </form>
       </div>

@@ -1,4 +1,4 @@
-from django.shortcuts import render
+
 from django.shortcuts import render, redirect
 from django.views.generic import View, CreateView
 from django.contrib.auth.models import User
@@ -20,7 +20,6 @@ from django.contrib.auth import update_session_auth_hash
 from django.contrib.auth.forms import PasswordChangeForm
 from django.contrib import messages
 
-
 # account settings
 def change_password(request):
     if request.method == 'POST':
@@ -38,25 +37,36 @@ def change_password(request):
         'form': form
     })
 
-
 # Landing pages view
 def HomeView(request):
     template_name = "dnam/landingpages/home.html"
-    service = Services.objects.all().order_by('-id')[0:3]
+    service = Services.objects.all().order_by('-id')[0:6]
+    aboutus = AboutUs.objects.all().order_by('id')[0:1]
+    testimonial = Career.objects.all().order_by('-id')[0:2]
+
     form = ContactForm()
-    if request.method == "POST":
-        form = ContactForm(request.POST)
+    if request.method=='POST':
+        form=ContactForm(request.POST)
         if form.is_valid():
             form.save()
-        return redirect("home")
+        return redirect('home')
     context = {
-        'service':service
+        'service':service,
+        'form':form,
+        'aboutus':aboutus,
+        'testimonial':testimonial
     }
     return render(request, template_name, context)
 
 def AboutUsView(request):
     template_name = "dnam/landingpages/aboutus.html"
-    return render(request, template_name)
+    aboutus = AboutUs.objects.all().order_by('id')[0:1]
+    ourteam = Ourteam.objects.all()
+    context = {
+        'aboutus':aboutus,
+        'ourteam':ourteam
+    }
+    return render(request, template_name, context)
 
 def ServicesView(request):
     template_name = "dnam/landingpages/services.html"
@@ -74,10 +84,19 @@ def ServiceDetailView(request, pk):
     }
     return render(request, template_name, context)
 
+def CareerView(request):
+    template_name = "dnam/landingpages/career.html"
+    career = Career.objects.all()
+    context = {
+        'career':career
+    }
+    return render(request, template_name, context)
+
+
 class SuperviserLoginView(FormView):
     template_name = "dnam/landingpages/superviserlogin.html"
     form_class = SuperviserLoginForm
-    success_url = reverse_lazy("home")
+    success_url = reverse_lazy("dashboard")
 
     def form_valid(self, form):
         uname = form.cleaned_data.get("username")
@@ -98,7 +117,15 @@ class SuperviserLoginView(FormView):
 @login_required()
 def DashboardView(request):
     template_name = "dnam/dashboard/dashboard/dashboard.html" 
-    return render(request, template_name)
+    user = Superviser.objects.all().order_by("-id")[0:3]
+    employee = Employee.objects.all().order_by("-id")[0:6]
+    client = Client.objects.all().order_by("-id")[0:3]
+    context = {
+        'user':user,
+        'employee':employee,
+        'client':client
+    }
+    return render(request, template_name, context)
 
 
 class SiteSearchView(LoginRequiredMixin, TemplateView):
@@ -117,7 +144,6 @@ class SiteSearchView(LoginRequiredMixin, TemplateView):
             'page_obj':page_obj,
         }
         return context
-    
 
 # Clinet views
 @login_required()
@@ -173,6 +199,7 @@ def ClientSitesView(request, pk):
     }
     return render(request, template_name, context)
 
+@login_required()
 def ClientSiteSearchView(request, pk):
     template_name = "dnam/dashboard/search/search_client_site.html"
     client = Client.objects.get(id=pk)
@@ -263,19 +290,42 @@ def AddWorkingDaysView(request, pk):
 def SitesTaskView(request, pk):
     template_name = "dnam/dashboard/clients/sitetasks.html"
     site = Sites.objects.get(id=pk)
+    workorder = WorkOrderTask.objects.filter(site=site)
+    complaint = ComplaintTask.objects.filter(site=site)
+    paginator = Paginator(workorder, 10)
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+    paginator2 = Paginator(complaint, 10)
+    # page_number2 = request.GET.get('page')
+    page_obj2 = paginator2.get_page(page_number)
     context = {
-        'site':site
+        'site':site,
+        'page_obj':page_obj,
+        'page_obj2':page_obj2
     }
     return render(request, template_name, context)
 
-def DeleteSiteView(request, pk):
-    template_name = "dnam/dashboard/clients/deletesite.html"
+@login_required()
+def DeleteClientSite(request, pk):
+    template_name = "dnam/dashboard/clients/deleteclientsite.html"
     sitedelete = Sites.objects.get(id=pk)
-    if request.method=='POST':
+    if request.method == 'POST':
         sitedelete.delete()
         return redirect('allclients')
-    context = {'sitedelete':sitedelete}
+    context = {
+        'sitedelete':sitedelete
+    }
     return render(request, template_name, context)
+
+@login_required()
+def DeleteClientView(request, pk):
+    template_name = "dnam/dashboard/clients/deleteclient.html"
+    clientdelete = Client.objects.get(id=pk)
+    if request.method=="POST":
+        clientdelete.delete = True
+        clientdelete.save()
+        return redirect('allclients')
+    return render(request, template_name, {'clientdelete':clientdelete})
 # Invoice Views
 
 @login_required()
@@ -283,7 +333,6 @@ def InvoiceInView(request):
     template_name = "dnam/dashboard/invoices/invoicein.html"
     invoicein = InvoiceIn.objects.all().order_by("-id")
     paginator = Paginator(invoicein, 10)
-
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
     context = {
@@ -412,9 +461,33 @@ def AddInvoiceOutView(request):
     }
     return render(request, template_name, context)
 
+@login_required()
+def DeleteInvoiceIn(request, pk):
+    template_name = "dnam/dashboard/invoices/deleteinvoicein.html"
+    invoicein = InvoiceIn.objects.get(id=pk)
+    if request.method == "POST":
+        invoicein.delete = True
+        invoicein.save()
+        return redirect('invoicein')
+    context = {
+        'invoicein':invoicein
+    }
+    return render(request, template_name, context)
+
+@login_required()
+def DeleteInvoiceOut(request, pk):
+    template_name = "dnam/dashboard/invoices/deleteinvoiceout.html"
+    invoiceout = InvoiceOut.objects.get(id=pk)
+    if request.method == "POST":
+        invoiceout.delete = True
+        invoiceout.save()
+        return redirect('invoiceout')
+    context = {
+        'invoiceout':invoiceout,
+    }
+    return render(request, template_name, context)
 
 # employee View
-
 @login_required()
 def AllEmployees(request):
     template_name = "dnam/dashboard/employees/allemployee.html"    
@@ -454,7 +527,6 @@ def AddEmployee(request):
 @login_required()
 def AddSuperEmployee(request):
     template_name = "dnam/dashboard/employees/addsuperemployee.html"
-
     form = AddSuperviserAsEmployee()
     if request.method=="POST":
         form = AddSuperviserAsEmployee(request.POST)
@@ -471,7 +543,6 @@ def EditEmployeeView(request, pk):
     template_name = "dnam/dashboard/employees/editemployee.html"
     employee = Employee.objects.get(id=pk)
     form = EditEmployeeForm(instance=employee)
-    
     if request.method=="POST":
         form = EditEmployeeForm(request.POST, instance=employee)
         if form.is_valid():
@@ -484,6 +555,7 @@ def EditEmployeeView(request, pk):
     }
     return render(request, template_name, context)
 
+@login_required()
 def DeleteEmployeeView(request, pk):
     template_name = "dnam/dashboard/employees/deleteemployee.html"
     employeedelete = Employee.objects.get(id=pk)
@@ -558,7 +630,7 @@ def SuperviserTaskView(request, pk):
     paginator2 = Paginator(complaint, 5)
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
-    page_obj2 = paginator.get_page(page_number)
+    page_obj2 = paginator2.get_page(page_number)
     context = {
         'superviser':superviser,
         'workorder':workorder,
@@ -697,3 +769,25 @@ def ComplaintsUpdateView(request, pk):
        'form':form
     }
     return render(request, template_name, context)
+
+@login_required()
+def TaskDeleteView(request, pk):
+    template_name = "dnam/dashboard/task/deletetask.html"
+    task = WorkOrderTask.objects.get(id=pk)
+    if request.method == "POST":
+        task.delete = True
+        task.save()
+        return redirect("alltask")
+    return render(request, template_name)
+
+@login_required()
+def ComplaintDeleteView(request, pk):
+    template_name = "dnam/dashboard/task/deletecomplaint.html"
+    task = ComplaintTask.objects.get(id=pk)
+    if request.method == "POST":
+        task.delete = True
+        task.save()
+        return redirect("alltask")
+    return render(request, template_name)
+
+

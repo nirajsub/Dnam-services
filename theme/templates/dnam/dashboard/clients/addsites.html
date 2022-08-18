@@ -94,13 +94,8 @@
                   <label class="uppercase tracking-wide text-gray-600  text-xs font-bold mb-2" for="company">
                     Cleaner
                    </label>
-                   <select name="cleaner" id="id_cleaner" form="id_AddSitesForm">
-                    {% for emp in employee %}
-                    {% if emp.delete == False%}
-                    <option value="{{emp.employee_name}}">{{emp.employee_name}}</option>
-                    {% endif %}
-                    {% endfor %}
-                   </select>
+                   {{form.cleaner}}
+                   
                   
                 </div>
           </div>

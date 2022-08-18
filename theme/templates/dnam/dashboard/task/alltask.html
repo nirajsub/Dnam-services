@@ -22,7 +22,7 @@ class="absolute inset-y-0 left-0 w-1 bg-[#f8373f] rounded-tr-lg rounded-br-lg"
     >
     <input
       class="w-full pl-8 p-2 text-sm text-gray-700 placeholder-gray-600 bg-gray-100 border-0 rounded-md   focus:placeholder-gray-500 focus:bg-white focus:border-purple-300 focus:outline-none focus:shadow-outline-purple form-input"
-      type="text" name="keyword" placeholder="Search" aria-label="Search" />
+      type="text" name="keyword" placeholder="Search task by workorder" aria-label="Search" />
       <button class="btn btn-danger my-2 my-sm-0" type="submit">
         Search
       </button>
@@ -36,6 +36,7 @@ class="absolute inset-y-0 left-0 w-1 bg-[#f8373f] rounded-tr-lg rounded-br-lg"
 <main class="h-full pb-16 overflow-y-auto">
     <div class="container grid px-6 mx-auto ">
         <div class="flex justify-center task mt-6">
+
             <div class="itemed">
                 <h4 data-id="workorder"
                     class="mb-4 text-lg font-semibold text-gray-50 border-[#f8373f] border-2 bg-[#f8373f] p-2 rounded cursor-pointer hover:bg-gray-50 hover:text-[#f8373f] hover:border-[#f8373f] mr-4">
@@ -49,6 +50,7 @@ class="absolute inset-y-0 left-0 w-1 bg-[#f8373f] rounded-tr-lg rounded-br-lg"
                     Complaints
                 </h4>
             </div>
+            
         </div>
         <div id="workorder" class="content actives w-full mb-8 overflow-hidden rounded-lg shadow-xs ">
             <div class="flex justify-between">
@@ -85,19 +87,20 @@ class="absolute inset-y-0 left-0 w-1 bg-[#f8373f] rounded-tr-lg rounded-br-lg"
                         </thead>
                         <tbody class="bg-white divide-y">
                             {% for task in page_obj %}
-            
+                            {% if task.delete == True %}
+                            {% else %}
                             <tr class="text-gray-700 ">
                                 <td class="px-4 py-3">
                                     <div class="flex items-center text-sm">
                                         <div>
                                             <p class="font-semibold">
-                                               <a href="{% url 'clientsites' task.site.client.id %}">{{task.site.client.client_name}}<a>
+                                               <a href="{% url 'clientsites' task.site.client.id %}" class="text-blue-500 font-bold">{{task.site.client.client_name}}<a>
                                             </p>
                                         </div>
                                     </div>
                                 </td>
                                 <td class="px-4 py-3 text-sm">
-                                    <a href="{% url 'sitetasks' task.site.id %}">{{task.site}}</a>
+                                    <a href="{% url 'sitetasks' task.site.id %}" class="text-blue-500 font-bold">{{task.site}}</a>
                                 </td>
                                 <td class="px-4 py-3 text-xs">
                                     {{task.workorder}}
@@ -133,7 +136,7 @@ class="absolute inset-y-0 left-0 w-1 bg-[#f8373f] rounded-tr-lg rounded-br-lg"
                                 <td class="px-4 py-3">
                                     <div class="flex items-center space-x-4 text-sm">
                                         <button
-                                            class="flex items-center justify-between px-2 py-2 text-sm font-medium leading-5 text-[#f8373f] rounded-lg  focus:outline-none focus:shadow-outline-gray"
+                                            class="flex items-center justify-between px-2 py-2 text-sm font-medium leading-5 text-purple-600 rounded-lg  focus:outline-none focus:shadow-outline-gray"
                                             aria-label="Edit">
                                             <a href="{% url 'workorderupdate' task.id %}">
                                             <svg class="w-5 h-5" aria-hidden="true" fill="currentColor"
@@ -144,9 +147,18 @@ class="absolute inset-y-0 left-0 w-1 bg-[#f8373f] rounded-tr-lg rounded-br-lg"
                                             </svg>
                                         </a>
                                         </button>
+                                        <button
+                                            class="flex items-center justify-between px-2 py-2 text-sm font-medium leading-5  text-[#f8373f]  rounded-lg  focus:outline-none focus:shadow-outline-gray"
+                                            aria-label="Edit">
+                                            <a href="{% url 'deletetask' task.id %}">
+                                            <svg class="w-5 h-5" aria-hidden="true" fill="currentColor" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M284.2 0C296.3 0 307.4 6.848 312.8 17.69L320 32H416C433.7 32 448 46.33 448 64C448 81.67 433.7 96 416 96H32C14.33 96 0 81.67 0 64C0 46.33 14.33 32 32 32H128L135.2 17.69C140.6 6.848 151.7 0 163.8 0H284.2zM31.1 128H416L394.8 466.1C393.2 492.3 372.3 512 346.9 512H101.1C75.75 512 54.77 492.3 53.19 466.1L31.1 128zM207 199L127 279C117.7 288.4 117.7 303.6 127 312.1C136.4 322.3 151.6 322.3 160.1 312.1L199.1 273.9V408C199.1 421.3 210.7 432 223.1 432C237.3 432 248 421.3 248 408V273.9L287 312.1C296.4 322.3 311.6 322.3 320.1 312.1C330.3 303.6 330.3 288.4 320.1 279L240.1 199C236.5 194.5 230.4 191.1 223.1 191.1C217.6 191.1 211.5 194.5 207 199V199z"/></svg>
+                                        
+                                        </a>
+                                        </button>
                                     </div>
                                 </td>
                             </tr>
+                            {% endif %}
                             {% endfor %}
 
                         </tbody>
@@ -259,17 +271,18 @@ class="absolute inset-y-0 left-0 w-1 bg-[#f8373f] rounded-tr-lg rounded-br-lg"
                         </thead>
                         <tbody class="bg-white divide-y ">
                             {% for task in page_obj2 %}
-            
+                            {% if task.delete == True %}
+                            {% else %}
                             <tr class="text-gray-700 ">
                                 <td class="px-4 py-3">
                                     <div class="flex items-center text-sm">
                                         <div>
-                                            <p class="font-semibold"><a href="{% url 'clientsites' task.site.client.id %}">{{task.site.client.client_name}}<a></p>
+                                            <p class="font-bold"><a href="{% url 'clientsites' task.site.client.id %}" class="text-blue-500">{{task.site.client.client_name}}<a></p>
                                         </div>
                                     </div>
                                 </td>
                                 <td class="px-4 py-3 text-sm">
-                                    <a href="{% url 'sitetasks' task.site.id %}">{{task.site}}</a>
+                                    <a href="{% url 'sitetasks' task.site.id %}" class="text-blue-500 font-bold">{{task.site}}</a>
                                 </td>
                                 <td class="px-4 py-3 text-xs">
                                     {{task.workorder}}
@@ -303,7 +316,7 @@ class="absolute inset-y-0 left-0 w-1 bg-[#f8373f] rounded-tr-lg rounded-br-lg"
                                 <td class="px-4 py-3">
                                     <div class="flex items-center space-x-4 text-sm">
                                         <button
-                                            class="flex items-center justify-between px-2 py-2 text-sm font-medium leading-5 text-[#f8373f] rounded-lg  focus:outline-none focus:shadow-outline-gray"
+                                            class="flex items-center justify-between px-2 py-2 text-sm font-medium leading-5 text-purple-600 rounded-lg  focus:outline-none focus:shadow-outline-gray"
                                             aria-label="Edit">
                                             <a href="{% url 'complaintsupdate' task.id %}">
                                             <svg class="w-5 h-5" aria-hidden="true" fill="currentColor"
@@ -314,9 +327,17 @@ class="absolute inset-y-0 left-0 w-1 bg-[#f8373f] rounded-tr-lg rounded-br-lg"
                                             </svg>
                                         </a>
                                         </button>
+                                        <button
+                                            class="flex items-center justify-between px-2 py-2 text-sm font-medium leading-5  text-[#f8373f]  rounded-lg  focus:outline-none focus:shadow-outline-gray"
+                                            aria-label="Edit">
+                                            <a href="{% url 'deletecomplaint' task.id %}">
+                                            <svg class="w-5 h-5" aria-hidden="true" fill="currentColor" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Pro 6.1.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2022 Fonticons, Inc. --><path d="M284.2 0C296.3 0 307.4 6.848 312.8 17.69L320 32H416C433.7 32 448 46.33 448 64C448 81.67 433.7 96 416 96H32C14.33 96 0 81.67 0 64C0 46.33 14.33 32 32 32H128L135.2 17.69C140.6 6.848 151.7 0 163.8 0H284.2zM31.1 128H416L394.8 466.1C393.2 492.3 372.3 512 346.9 512H101.1C75.75 512 54.77 492.3 53.19 466.1L31.1 128zM207 199L127 279C117.7 288.4 117.7 303.6 127 312.1C136.4 322.3 151.6 322.3 160.1 312.1L199.1 273.9V408C199.1 421.3 210.7 432 223.1 432C237.3 432 248 421.3 248 408V273.9L287 312.1C296.4 322.3 311.6 322.3 320.1 312.1C330.3 303.6 330.3 288.4 320.1 279L240.1 199C236.5 194.5 230.4 191.1 223.1 191.1C217.6 191.1 211.5 194.5 207 199V199z"/></svg>
+                                        </a>
+                                        </button>
                                     </div>
                                 </td>
                             </tr>
+                            {% endif %}
                             {% endfor %}
                         </tbody>
                     </table>

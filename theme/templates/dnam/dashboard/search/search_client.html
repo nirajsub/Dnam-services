@@ -10,6 +10,14 @@
 
 {% block content %}
 <main class="h-full overflow-y-auto">
+  <div>
+    <a class=" mr-4 flex justify-center">
+        <h4
+            class="mb-4 text-lg font-semibold text-gray-50 border-[#f8373f] border-2 bg-[#f8373f] p-2 rounded cursor-pointer hover:bg-gray-50 hover:text-[#f8373f] hover:border-[#f8373f] mr-4">
+            Search Results for <span class="text-info">"{{request.GET.keyword}}"</span>
+        </h4>
+    </a>
+</div>
     <div class="container px-6 mx-auto grid">
 
       <!-- Cards -->

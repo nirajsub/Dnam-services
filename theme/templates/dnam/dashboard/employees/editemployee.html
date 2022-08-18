@@ -18,6 +18,24 @@
         <div class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 flex flex-col">
         <form method="POST">
             {% csrf_token %}
+            {% if employee.employee_user is not none %}
+            Name:
+            {{employee.employee_name}}
+            Contact:
+            {{employee.employee_user.superviser_contact}}
+            Address:
+            {{employee.employee_user.superviser_address}}
+            Email:
+            {{employee.employee_user.superviser_user.email}}
+            <div class="px-6 my-6 flex justify-center">
+              <button type="submit"
+                class="flex items-center justify-center md:w-1/2  px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple"
+              >
+              Update
+              </button>
+            </div>
+            {% else %}
+            
             {{form|crispy}}
           <div class="px-6 my-6 flex justify-center">
                 <button type="submit"
@@ -26,6 +44,7 @@
                 Update
                 </button>
               </div>
+              {% endif %}
         </form>
     </div>
       </div>

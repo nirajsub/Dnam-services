@@ -8,10 +8,10 @@ class SuperviserLoginForm(forms.Form):
     username = forms.CharField(widget=forms.TextInput())
     password = forms.CharField(widget=forms.PasswordInput())
     
-class ContactForm(forms.ModelForm):
+class ContactForm(ModelForm):
     class Meta:
-        model = Contacts
-        fields = '__all__'
+        model = Contact
+        fields = ["name","email","phone","content",]
 
 
 # client forms
@@ -59,14 +59,15 @@ class EditInvoiceInForm(forms.ModelForm):
     class Meta:
         model = InvoiceIn
         fields = '__all__'
+        exclude = ['delete']
 
 class EditInvoiceOutForm(forms.ModelForm):
     class Meta:
         model = InvoiceOut
         fields = '__all__'
+        exclude = ['delete']
 
 # Employee Forms
-    
 class AddEmployeeForm(forms.ModelForm):
     class Meta:
         model = Employee
@@ -104,5 +105,18 @@ class AddComplaintsForm(forms.ModelForm):
         model = ComplaintTask
         fields = '__all__'
         exclude = ['complaint_user', 'client_name']
+
+class EditWorkOrderForm(forms.ModelForm):
+    class Meta:
+        model = WorkOrderTask
+        fields = '__all__'
+        exclude = ['workorder_user', 'client_name']
+
+class EditComplaintsForm(forms.ModelForm):
+    class Meta:
+        model = ComplaintTask
+        fields = '__all__'
+        exclude = ['complaint_user', 'client_name']
+    
     
 
