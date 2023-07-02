@@ -1,24 +1,38 @@
+<nav class="
+relative
+w-full
+flex flex-wrap
+items-center
+justify-between
+py-1
+bg-gray-100
+text-gray-500
+hover:text-gray-700
+focus:text-gray-700
+navbar navbar-expand-lg navbar-light
+">
+<div class="container-fluid w-full flex flex-wrap items-center justify-between px-6">
 
-<div class="top-0 z-50 w-[100%]  bg-gray-300 sm:py-4 py-16  max-h-16">
 
-<div class="flex justify-flex lg:gap-20 pr-20 flex-wrap hover:text-[#6057d9] text-gray-600 mx-5 -my-3">
-  <div>
-  <a href="tel:0451703346" class="hover:text-[#f8373f]">
-      
-        <i class="fa fa-phone"></i>
-        0451703346
-      
-  </a>
+<div class="collapse navbar-collapse flex-grow items-center" >
+
+<!-- Left links -->
+<ul class="navbar-nav flex flex-col pl-0 list-style-none mr-auto">
+  <li class="nav-item p-2">
+    <a class="nav-link text-gray-500 hover:text-gray-700 focus:text-gray-700 p-0" href="#">           </a>
+  </li>
+  <li class="nav-item p-2">
+    <a class="nav-link text-gray-500 hover:text-gray-700 focus:text-gray-700 p-0" href="#"><i class="fa fa-phone"></i>
+      0451703346</a>
+  </li>
+  <li class="nav-item p-2">
+    <a class="nav-link text-gray-500 hover:text-gray-700 focus:text-gray-700 p-0" href="#"><i class="fa fa-envelope"></i>
+      info@dnamservices.com.au</a>
+  </li>
+</ul>
 </div>
-<div>
-  <a href="mailto:info@dnamservices.com.au" class="hover:text-[#f8373f]">
-     
-        <i class="fa fa-envelope"></i>
-        info@dnamservices.com.au
-      
-  </a>
-</div>
-</div>
+
+<div class="flex items-center relative">
 <div class="flex justify-end space-x-6 pr-20">
   <a href="#" class="text-gray-400 hover:text-sky-600 font-Roboto">
       <span class="sr-only">Facebook</span>
@@ -40,14 +54,26 @@
   </a>
   
 </div>
+
 </div>
 </div>
-<div class="flex justify-between lg:justify-center lg:gap-40 items-center sticky top-0 z-50 w-[100%] bg-gray-50 ">
+</div>
+</nav>
+
+
+<div class="flex justify-between lg:justify-center lg:gap-40 sm:gap-5 items-center sticky top-0 z-50 w-[100%] bg-gray-50 ">
 <div class="">
   <a href="{% url 'home' %}">
       <img class="h-14 w-24" src="/media/images/logo.png" alt="">
   </a>
 </div>
+
+
+
+
+
+
+
 
 <div class="lg:flex lg:gap-10 gap-3 pr-20 hidden flex-wrap p-5 ">
   <a href="{% url 'home' %}">
@@ -60,7 +86,7 @@
     <div class=" text-sm font-Roboto border-b-2 hover:border-b-2 hover:border-b-[#f8373f]  border-b-gray-50 text-gray-600">Our Services</div>
   </a>
   <a href="{% url 'career' %}">
-    <div class=" text-sm font-Roboto border-b-2 hover:border-b-2 hover:border-b-[#f8373f]  border-b-gray-50 text-gray-600">Career</div>
+    <div class=" text-sm font-Roboto border-b-2 hover:border-b-2 hover:border-b-[#f8373f]  border-b-gray-50 text-gray-600">Testimonials</div>
   </a>
   <a href="http://127.0.0.1:8000/#contact">
     <div class=" text-sm font-Roboto border-b-2 hover:border-b-2 hover:border-b-[#f8373f]  border-b-gray-50 text-gray-600">Contact Us</div>
@@ -102,7 +128,7 @@
         <div class="font-semibold text-xl font-Roboto hover:border-b-2 border-b-2 text-gray-600">Our Services</div>
       </a>
       <a href="{% url 'career' %}" onclick="toggleSidebar()">
-        <div class="font-semibold text-xl font-Roboto hover:border-b-2 border-b-2 text-gray-600">Career</div>
+        <div class="font-semibold text-xl font-Roboto hover:border-b-2 border-b-2 text-gray-600">Testimonials</div>
       </a>
       <a href="http://127.0.0.1:8000/#contact" onclick="toggleSidebar()">
         <div class="font-semibold text-xl font-Roboto hover:border-b-2 border-b-2 text-gray-600">Contact Us</div>

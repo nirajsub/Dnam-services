@@ -1,7 +1,6 @@
 {% extends 'homebase.html' %}
 {% load static %}
 {% block body-content %}
-
 <div class="mb-10 mt-10 grid grid-flow-col grid-rows-2 sm:grid-rows-1 sm:grid-cols-2 gap-4">
   <div class="flex items-center justify-center" data-aos="fade-left">
     <main class="max-w-screen-xl px-4 lg:px-16">
@@ -12,7 +11,7 @@
             <span class="text-[#f8373f]">Dnam Services</span>
           </h2>
           <p class="mt-3 text-base text-gray-600 font-Roboto sm:mt-5 sm:text-lg sm:max-w-xl sm:mx-auto md:mt-5 md:text-xl lg:mx-0">
-            Lorem ipsum dolor sit, amet consectetur adipisicing elit. 
+            Working for <b>cleaning Excellence.</b>
           </p>
           <div class="mt-5 sm:mt-8 sm:flex justify-start">
             <div class="mt-3 sm:mt-0 sm:ml-3">
@@ -59,68 +58,109 @@
       </div>
   </div>
 </div>
-    <div class="px-6 md:lg:xl:px-40   border-t mb-4 shadow-md py-20 bg-opacity-10 " style="background-image: url('https://www.toptal.com/designers/subtlepatterns/uploads/dot-grid.png') ;">
+    <div class="px-6 md:lg:xl:px-40   shadow-md py-20 bg-opacity-10 " style="background-image: url('https://www.toptal.com/designers/subtlepatterns/uploads/dot-grid.png') ;">
       <div class="z-1 flex justify-center text-gray-600 font-Roboto font-bold text-2xl mt-16 mb-12 md:text-4xl" data-aos="zoom in" data-aos-anchor-placement="center-bottom">
         <span class="border-b-4 border-[#f8373f]"> What We Do</span>
       </div>
-      <div class="grid grid-cols-1 md:lg:xl:grid-cols-3 group bg-white shadow-xl shadow-neutral-100 border m-4  ">
+      <div class="grid grid-cols-1 md:lg:xl:grid-cols-3 group bg-white shadow-xl shadow-neutral-100 m-4  ">
         {% for service in service %}
-        <a href="{% url 'servicedetail' service.id %}">
-          <div
-              class="p-10 flex  flex-col items-center text-center group md:lg:xl:border-r md:lg:xl:border-b hover:bg-slate-50 cursor-pointer">
-              <span class="p-5 rounded-full text-white shadow-lg "><img class="h-20 w-20 " src={{service.image.url}} alt="" ></span>
-              
-              <p class="text-xl font-medium text-slate-700 mt-3">{{service.name}}</p>
-              <p class="mt-2 text-sm text-slate-500">{{service.detail}}</p>
+        <div class="card mb-7" >
+          <div class="card-header mx-4 mt-6">
+            <a href="#" blur-shadow-image="true">
+              <img
+                class="w-60 h-48 rounded-lg"
+                src={{service.image.url}}
+                alt="card image"
+              />
+            </a>
           </div>
-        </a>
+          <div class="card-body">
+            <a href="#">
+              <h4 class="font-medium">{{service.name}}</h4>
+            </a>
+            <p class="opcacity-60 mb-3">
+              {{service.detail}}
+            </p>  
+          <a href="{% url 'servicedetail' service.id %}" class="w-full flex items-center justify-center px-8 py-3 border border-transparent text-base leading-6 font-medium rounded-md text-gray-600 bg-indigo-100 hover:text-[#f8373f] hover:bg-indigo-50 focus:outline-none focus:shadow-outline-indigo focus:border-indigo-300 transition duration-150 ease-in-out md:py-4 md:text-lg md:px-10">
+            View More...
+          </a> 
+          </div>
+        </div>
           {% endfor %}
       </div>
-      
     </div>
-    <div>
-      <img src="{% static "media/index-2.png" %}" alt="">
+  <div class="bg-gradient-to-b from-pink-100 to-purple-200" id="about">
+  <section class="text-gray-600 body-font">
+    <div class="container px-5 py-24 mx-auto">
+      <div class="flex flex-wrap w-full mb-8 justify-center">
+        <div class="z-1 flex justify-center text-gray-600 font-Roboto font-bold text-2xl mt-16 mb-12 md:text-4xl" data-aos="zoom in" data-aos-anchor-placement="center-bottom">
+          <span class="border-b-4 border-[#f8373f]">Valuable Metrics</span>
+        </div>
+      </div>
+      <div class="flex justify-between -m-4 text-center">
+        <div class="p-4 sm:w-1/4 w-1/2">
+          <div class="bg-indigo-500 rounded-lg p-2 xl:p-6">
+              <h2 class="title-font font-medium sm:text-4xl text-3xl text-white">2.7K</h2>
+              <p class="leading-relaxed text-gray-100 font-bold">Pojects Complete</p>
+          </div>
+        </div>
+        <div class="p-4 sm:w-1/4 w-1/2">
+          <div class="bg-indigo-500 rounded-lg p-2 xl:p-6">
+              <h2 class="title-font font-medium sm:text-4xl text-3xl text-white">3.8K</h2>
+              <p class="leading-relaxed text-gray-100 font-bold">Satisfied Clients</p>
+          </div>
+        </div>
+        <div class="p-4 sm:w-1/4 w-1/2">
+          <div class="bg-indigo-500 rounded-lg p-2 xl:p-6">
+              <h2 class="title-font font-medium sm:text-4xl text-3xl text-white">35</h2>
+              <p class="leading-relaxed text-gray-100 font-bold">Trusted Team</p>
+          </div>
+        </div>
+      </div>
     </div>
+  </section>
+  </div>
 
     <section class="text-gray-600 body-font">
-      <div class="container px-5 py-24 mx-auto">
+      <div class="container px-5 py-0 mx-auto">
         <div class="z-1 flex justify-center text-gray-600 font-Roboto font-bold text-2xl mt-16 mb-12 md:text-4xl" data-aos="zoom in" data-aos-anchor-placement="center-bottom">
           <span class="border-b-4 border-[#f8373f]"> Testimonials</span>
         </div>
         <div class="flex flex-wrap -m-4">
-          {% for career in testimonial %}
-          <div class="p-4 md:w-1/2 w-full">
-            <div class="h-full bg-gray-100 p-8 rounded">
-              <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="block w-5 h-5 text-gray-400 mb-4" viewBox="0 0 975.036 975.036">
-                <path d="M925.036 57.197h-304c-27.6 0-50 22.4-50 50v304c0 27.601 22.4 50 50 50h145.5c-1.9 79.601-20.4 143.3-55.4 191.2-27.6 37.8-69.399 69.1-125.3 93.8-25.7 11.3-36.8 41.7-24.8 67.101l36 76c11.6 24.399 40.3 35.1 65.1 24.399 66.2-28.6 122.101-64.8 167.7-108.8 55.601-53.7 93.7-114.3 114.3-181.9 20.601-67.6 30.9-159.8 30.9-276.8v-239c0-27.599-22.401-50-50-50zM106.036 913.497c65.4-28.5 121-64.699 166.9-108.6 56.1-53.7 94.4-114.1 115-181.2 20.6-67.1 30.899-159.6 30.899-277.5v-239c0-27.6-22.399-50-50-50h-304c-27.6 0-50 22.4-50 50v304c0 27.601 22.4 50 50 50h145.5c-1.9 79.601-20.4 143.3-55.4 191.2-27.6 37.8-69.4 69.1-125.3 93.8-25.7 11.3-36.8 41.7-24.8 67.101l35.9 75.8c11.601 24.399 40.501 35.2 65.301 24.399z"></path>
-              </svg>
-              <p class="leading-relaxed mb-6">{{career.detail}}</p>
-              <a class="inline-flex items-center">
-                <img alt="testimonial" src={{career.image.url}} class="w-12 h-12 rounded-full flex-shrink-0 object-cover object-center">
-                <span class="flex-grow flex flex-col pl-4">
-                  <span class="title-font font-medium text-gray-900">{{career.name}}</span>
-                  <span class="text-gray-500 text-sm">{{career.role}}</span>
-                </span>
-              </a>
+          <div class="py-16 white">  
+            <div class="container m-auto px-6 text-gray-600 md:px-12 xl:px-6">
+                <div class="grid gap-8 md:grid-rows-2 lg:grid-cols-2">
+                  <div class="row-span-2 p-6 border border-gray-100 rounded-xl bg-gray-50 text-center sm:p-8">
+                    <div class="h-full flex flex-col justify-center space-y-4">
+                      <img class="w-50 h-40 mx-auto rounded-md" src="/media/images/people.webp" alt="user avatar" height="220" width="220" loading="lazy">
+                      <h1 class="text-gray-600 md:text-4xl font-bold"> <span class="font-serif">"</span>What Our Clients Say About Us.<span class="font-serif">"</span></h1>
+                    </div>
+                  </div>
+                  {% for career in testimonial %}
+                  <div class="p-6 border border-gray-100 rounded-xl bg-gray-50 sm:flex sm:space-x-8 sm:p-8">
+                    <img class="w-20 h-20 mx-auto rounded-full" src={{career.image.url}} alt="user avatar" height="220" width="220" loading="lazy">
+                    <div class="space-y-4 mt-4 text-center sm:mt-0 sm:text-left">
+                      <p class="text-gray-600"> <span class="font-serif">"</span>{{career.detail}}<span class="font-serif">"</span></p>
+                      <div>
+                          <h6 class="text-lg font-semibold leading-none">{{career.name}}</h6>
+                          <span class="text-xs text-gray-500">{{career.role}}</span>
+                      </div>
+                    </div>
+                  </div>
+                  {% endfor %}
+                </div>
             </div>
-          </div>
-          {% endfor %}
-          
-          
-
+            <div class="mt-5 sm:mt-8 sm:flex justify-center">
+              <div class="mt-3 sm:mt-0 sm:ml-3">
+                <a href="{% url 'career' %}" class="w-full flex items-center justify-center px-8 py-3 border border-transparent text-base leading-6 font-medium rounded-md text-gray-600 bg-indigo-100 hover:text-[#f8373f] hover:bg-indigo-50 focus:outline-none focus:shadow-outline-indigo focus:border-indigo-300 transition duration-150 ease-in-out md:py-4 md:text-lg md:px-10">
+                  View More...
+                </a> 
+              </div>
         </div>
-        <div class="mt-5 sm:mt-8 sm:flex justify-center">
-        <div class="mt-3 sm:mt-0 sm:ml-3">
-          <a href="{% url 'career' %}" class="w-full flex items-center justify-center px-8 py-3 border border-transparent text-base leading-6 font-medium rounded-md text-gray-600 bg-indigo-100 hover:text-[#f8373f] hover:bg-indigo-50 focus:outline-none focus:shadow-outline-indigo focus:border-indigo-300 transition duration-150 ease-in-out md:py-4 md:text-lg md:px-10">
-            View More...
-          </a> 
         </div>
       </div>
       </div>
-      
-        
     </section>
-
 
 <div class="relative flex items-top justify-center min-h-screen  sm:items-center sm:pt-0" id="contact">
   <div class="max-w-6xl mx-auto sm:px-6 lg:px-8">
@@ -133,7 +173,6 @@
                   <p class="text-normal text-lg sm:text-2xl font-medium text-gray-600  mt-2">
                       Fill in the form to start a conversation
                   </p>
-
                   <div class="flex items-center mt-8 text-gray-600 ">
                       <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" viewBox="0 0 24 24" class="w-8 h-8 text-gray-500">
                           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/>
@@ -144,7 +183,6 @@
                           Postal Code
                       </div>
                   </div>
-
                   <div class="flex items-center mt-4 text-gray-600 ">
                       <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" viewBox="0 0 24 24" class="w-8 h-8 text-gray-500">
                           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/>
@@ -153,7 +191,6 @@
                           <a href="tel:+977 9876543210">+977 9876543210</a>
                       </div>
                   </div>
-
                   <div class="flex items-center mt-2 text-gray-600 ">
                       <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" viewBox="0 0 24 24" class="w-8 h-8 text-gray-500">
                           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
@@ -163,19 +200,16 @@
                       </div>
                   </div>
               </div>
-
               <form class="p-6 flex flex-col justify-center" data-aos="fade-left" method="POST">
                   {% csrf_token %}
                   <div class="flex flex-col">
                       <label for="name" class="hidden">Full Name</label>
                       <input type="name" name="name" id="name" placeholder="Full Name" class="w-100 mt-2 py-3 px-3 rounded-lg bg-white border border-gray-400 dark:border-gray-700 text-gray-600 font-semibold focus:border-indigo-500 focus:outline-none">
                   </div>
-
                   <div class="flex flex-col mt-2">
                       <label for="email" class="hidden">Email</label>
                       <input type="email" name="email" id="email" placeholder="Email" class="w-100 mt-2 py-3 px-3 rounded-lg bg-white border border-gray-400 dark:border-gray-700 text-gray-600 font-semibold focus:border-indigo-500 focus:outline-none">
                   </div>
-
                   <div class="flex flex-col mt-2">
                       <label for="tel" class="hidden">Number</label>
                       <input type="number" name="phone" id="tel" placeholder="Phone Number" class="w-100 mt-2 py-3 px-3 rounded-lg bg-white border border-gray-400 dark:border-gray-700 text-gray-600 font-semibold focus:border-indigo-500 focus:outline-none">
@@ -187,13 +221,9 @@
                   <button type="submit" class="md:w-32 bg-indigo-600 hover:bg-blue-dark text-white font-bold py-3 px-6 rounded-lg mt-3 hover:bg-indigo-500 transition ease-in-out duration-300">
                       Submit
                   </button>
-                  
               </form>
           </div>
       </div>
   </div>
 </div>
-
-
-
 {% endblock body-content %}
